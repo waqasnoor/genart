@@ -4,89 +4,96 @@ const settings = {
   dimensions: [2048, 2048],
 };
 
-const margin = 10;
-const lineDiff = 50;
-const radius = 5;
+const margin = 50;
+const lineDiff = 200;
 const generateQuardentPoints = (xMin, yMin, xMax, yMax) => {
   return { xMin, xMax, yMin, yMax };
 };
 
+const encodeCoords = (point, center) => {
+  return Math.round((point - center) / 10);
+};
+const decodeCoords = (point, center) => {
+  return Math.round((point + center) * 10);
+};
+
 const sketch = () => {
   return ({ context, width, height }) => {
-    context.fillStyle = "white";
-    context.fillRect(0, 0, width, height);
+    let centerX = width / 2;
+    let centerY = height / 2;
+    context.translate(centerX, centerY);
+    context.rotate((3 * Math.PI) / 2);
 
     width = width - margin;
+
     height = height - margin;
 
-    const centerX = Math.round(width / 2);
-    const centerY = Math.round(height / 2);
+    centerX = width / 2;
+    centerY = height / 2;
 
-    const q1 = generateQuardentPoints(margin, margin, centerX, centerY);
+    context.strokeStyle = "black";
+    context.strokeRect(-centerX, -centerY, width, height);
 
-    const q2 = generateQuardentPoints(centerX, margin, width, centerY);
+    const q1 = generateQuardentPoints(0, 0, centerX, centerY);
 
-    const q3 = generateQuardentPoints(margin, centerY, centerX, height);
-    const q4 = generateQuardentPoints(centerX, centerY, width, height);
+    const q2 = generateQuardentPoints(-centerX, 0, 0, centerY);
 
-    const plotCenterLine = () => {
-      context.beginPath();
-      context.moveTo(margin, centerY);
-      context.lineTo(width, centerY);
-      context.strokeStyle = "red";
-      context.lineWidth = 4;
-      context.stroke();
+    const q3 = generateQuardentPoints(-centerX, -centerY, 0, 0);
+    const q4 = generateQuardentPoints(0, -centerY, centerX, 0);
 
-      context.beginPath();
-      context.moveTo(centerX, margin);
-      context.lineTo(centerX, height);
-      context.strokeStyle = "blue";
-      context.lineWidth = 4;
-      context.stroke();
+    const plotPoints = (q, color) => {
+      const { xMin, xMax, yMin, yMax } = q;
+      for (let x = xMin; x <= xMax; x += lineDiff) {
+        for (let y = yMin; y <= yMax; y += lineDiff) {
+          context.beginPath();
+          context.fillStyle = color;
+          context.arc(x, y, 10, 0, Math.PI * 2, false);
+          context.fill();
+        }
+      }
     };
-    plotCenterLine();
+    plotPoints(q4, "red");
+    // context.beginPath();
 
-    const verticleLines = (quad, color) => {
-      const { xMin, xMax, yMin, yMax } = quad;
+    // context.fillStyle = "#fff";
+    // context.font = "35px Arial";
+    // context.fillText(
+    //   `{${encodeCoords(centerX, centerX)},${encodeCoords(centerY, centerY)}}`,
+    //   centerX,
+    //   centerY
+    // );
 
-      for (let i = xMin; i <= xMax; i += lineDiff) {
-        console.log("making line");
-        context.beginPath();
-        context.moveTo(i, yMin);
-        context.lineTo(i, yMax);
-        context.strokeStyle = "orange";
-        context.lineWidth = 4;
-        context.stroke();
-        // context.endPath();
+    const plotCoords = (minX, minY, maxX, maxY) => {
+      for (let x = minX; x < maxX; x += lineDiff) {
+        for (let y = minY; y < maxY; y += lineDiff) {
+          context.beginPath();
+
+          context.fillStyle = "#000";
+          context.font = "35px Arial";
+          context.fillText(`{${x / 100},${y / 100}}`, x, y);
+        }
       }
     };
 
-    const horizontalLine = (quad, color) => {
-      const { xMin, xMax, yMin, yMax } = quad;
+    plotCoords(-centerX, -centerY, centerX, centerY);
 
-      for (let i = yMin; i <= yMax; i += lineDiff) {
-        console.log("making line");
-        context.beginPath();
-        context.moveTo(xMin, i);
-        context.lineTo(xMax, i);
-        context.strokeStyle = "orange";
-        context.lineWidth = 4;
-        // context.strokeStyle = "orange";
-        context.stroke();
-        // context.endPath();
-      }
-    };
+    // const plotPoints = (minX, minY, maxX, maxY) => {
+    //   for (let x = minX; x <= maxX; x += lineDiff) {
+    //     for (let y = minY; y <= maxY; y += lineDiff) {
+    //       context.beginPath();
 
-    // verticleLines(q1);
-    // verticleLines(q2);
-    // verticleLines(q3);
-    // verticleLines(q4);
-    horizontalLine(q1);
-    horizontalLine(q2);
-    horizontalLine(q3);
-    horizontalLine(q4);
-    // verticleLines(q3);
-    // horizontalLine(q4);
+    //       context.fillStyle = "#fff";
+    //       context.font = "35px Arial";
+    //       context.fillText(
+    //         `{${encodeCoords(x, centerX)},${encodeCoords(y, centerY)}}`,
+    //         x,
+    //         y
+    //       );
+    //     }
+    //   }
+    // };
+
+    // plotPoints(margin, margin, width - margin, height - margin);
   };
 };
 

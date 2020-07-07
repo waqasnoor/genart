@@ -4,12 +4,16 @@
   "description": "",
   "main": "solving_sol_11.js",
   "scripts": {
+    "dev": "parcel index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "canvas-sketch": "^0.7.3"
+    "canvas-sketch": "^0.7.3",
+    "canvas-sketch-util": "^1.10.0",
+    "nice-color-palettes": "^3.0.0",
+    "parcel-bundler": "^1.12.4"
   }
 }

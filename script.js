@@ -13,11 +13,11 @@ const colors = pallete;
 // const colors = ["#fff"];
 
 const count = 40;
-let width = innerWidth - 20;
-let height = innerHeight - 20;
+let width = innerWidth;
+let height = innerHeight;
 window.addEventListener("resize", () => {
-  let width = innerWidth - 20;
-  let height = innerHeight - 20;
+  let width = innerWidth;
+  let height = innerHeight;
   ctx.canvas.width = width;
   ctx.canvas.height = width;
   init();
@@ -74,10 +74,16 @@ function init() {
     const u = Math.abs(random.value());
     const v = Math.abs(random.value());
 
-    const x = Math.abs(random.noise1D(u)) * (width - size * 2);
-    const y = Math.abs(random.noise1D(v)) * (height - size * 2);
-    const directionX = random.gaussian(index, random.value() * index) * 0.01;
-    const directionY = random.gaussian(index, random.value() * index) * 0.01;
+    // const x = Math.abs(random.noise1D(u, v)) * (width - size * 2);
+    // const y = Math.abs(random.noise2D(u, v)) * (height - size * 2);
+    const x = random.value() * (width - size * 2);
+
+    const y = random.value() * (height - size * 2);
+    const directionX = random.value() * 10;
+
+    const directionY = random.value() * 10;
+    // const directionX = random.gaussian(index, random.value() * index) * 0.01;
+    // const directionY = random.gaussian(index, random.value() * index) * 0.01;
 
     const colorIndex = Math.round(Math.random() * 10) % colors.length;
     const color = colors[colorIndex];

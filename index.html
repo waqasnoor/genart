@@ -8,21 +8,26 @@
       * {
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
       }
       #canvas {
-        /* background: rgb(43, 41, 82); */
-        /* background: linear-gradient(
-          90deg,
-          rgba(43, 41, 82, 1) 0%,
-          rgba(95, 95, 255, 1) 46%,
-          rgba(10, 79, 93, 1) 100%
-        ); */
+        /* background: black; */
+        position: absolute;
+        top: 0;
+        bottom: 0;
+      }
+      #blackBackground {
+        height: 100vh;
+        width: 50vw;
+        position: absolute;
+        top: 0;
+        bottom: 0;
       }
     </style>
   </head>
   <body>
     <canvas id="canvas"></canvas>
 
-    <script src="./spiral.js"></script>
+    <script src="./particle.js"></script>
   </body>
 </html>

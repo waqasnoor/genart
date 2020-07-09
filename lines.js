@@ -21,7 +21,7 @@ window.addEventListener("resize", () => {
   ctx.canvas.height = height;
   init();
 });
-const count = 40;
+const count = 50;
 const getGridPoints = () => {
   const gridPoints = [];
   for (let i = 0; i < count; i++) {
@@ -39,13 +39,9 @@ function init() {
   //   ctx.stroke();
 
   const gridPoints = getGridPoints();
-
   const dx = lerp(0, width, 1 / (count - 1));
   const dy = lerp(0, height, 1 / (count - 1));
 
-  console.log({ dx, dy });
-  //   .filter(() => Math.random() > 0.5);
-  console.log({ gridPoints });
   gridPoints.forEach(({ position }) => {
     const [u, v] = position;
 
@@ -55,7 +51,6 @@ function init() {
 
     ctx.beginPath();
     ctx.moveTo(x, y);
-    console.log({ isVerticle });
     if (isVerticle) {
       ctx.lineTo(x, y + dy);
     } else {

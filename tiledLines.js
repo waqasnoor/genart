@@ -26,18 +26,25 @@ window.addEventListener("resize", () => {
 const step = 10;
 
 const draw = (x, y, width, height) => {
-  const isLeftToRight = Math.random() > 0.5;
+  const isVeticle = Math.random() > 0.5;
 
   ctx.beginPath();
-  if (isLeftToRight) {
+  // if (isLeftToRight) {
+  //   ctx.moveTo(x, y);
+  //   ctx.lineTo(x + width, y + height);
+  // } else {
+  //   ctx.moveTo(x + width, y);
+  //   ctx.lineTo(x, y + height);
+  // }
+  if (isVeticle) {
     ctx.moveTo(x, y);
-    ctx.lineTo(x + width, y + height);
-  } else {
-    ctx.moveTo(x + width, y);
     ctx.lineTo(x, y + height);
+  } else {
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + width, y);
   }
   ctx.strokeStyle = `hsl(${random.pick(hues)}, 95%, 50%)`;
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 1;
   ctx.stroke();
 };
 
@@ -49,8 +56,9 @@ const hues = [
 
 function init() {
   // ctx.rect(0, 0, width, height);
-  // ctx.strokeStyle = "#000";
-  // ctx.stroke();
+  // ctx.fillStyle = "rgba(0,0,0,0.5)";
+  // ctx.fill();
+  // requestAnimationFrame(init);
 
   for (let x = 0; x < width; x += step) {
     for (let y = 0; y < height; y += step) {

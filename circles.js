@@ -25,7 +25,7 @@ window.addEventListener("resize", () => {
 });
 const circles = [];
 const minRadius = 2;
-const maxRadius = 60;
+const maxRadius = width / 8;
 const maxCircles = 1000;
 
 let retries = 0;
@@ -51,7 +51,7 @@ const inCollision = (circle) => {
     const diffY = y2 - y1;
 
     return (
-      Math.pow(diffX, 2) + Math.pow(diffY, 2) <= Math.pow(radius1 + radius2, 2)
+      Math.pow(diffX, 2) + Math.pow(diffY, 2) < Math.pow(radius1 + radius2, 2)
     );
   });
   //   console.log({ isColliding });
@@ -113,10 +113,11 @@ function init() {
 function drawCircles() {
   circles.forEach((circle) => {
     ctx.beginPath();
+    const color = lerp(0, 180, circle.radius / maxRadius);
     ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2, false);
-    ctx.strokeStyle = `hsl(${circle.color},90%,60%)`;
-    ctx.stroke();
-    ctx.fillStyle = `hsl(${circle.color},90%,60%)`;
+    // ctx.strokeStyle = `hsl(${color},90%,50%)`;
+    // ctx.stroke();
+    ctx.fillStyle = `hsl(${color},90%,60%)`;
     ctx.fill();
   });
 }

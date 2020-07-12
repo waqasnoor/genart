@@ -201,13 +201,8 @@ function animate() {
 
   ctx.fillStyle = "#000";
   ctx.fillRect(0, 0, width, height);
-  // ctx.save();
-  // ctx.translate(centerX, centerY);
   rotate();
   circles.forEach((c) => c.update());
-
-  // ctx.rotate(0.1);
-  // ctx.restore();
 }
 init();
 animate();
